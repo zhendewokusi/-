@@ -9,7 +9,7 @@ using namespace std;
 
 const int MOD = 26;
 
-
+// 求整数 a 在模 m 下的逆元
 int modInverse(int a, int m) {
     a = a % m;
     for (int x = 1; x < m; x++) {
