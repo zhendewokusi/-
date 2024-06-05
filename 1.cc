@@ -80,7 +80,7 @@ vector<vector<int>> inverseMatrix(const vector<vector<int>>& matrix) {
     return inv_matrix;
 }
 
-
+// 将给定的矩阵 matrix 与向量 vec 相乘
 vector<int> multiplyMatrix(const vector<vector<int>>& matrix, const vector<int>& vec) {
     vector<int> result(matrix.size());
     for (int i = 0; i < matrix.size(); ++i) {
@@ -171,6 +171,7 @@ int main() {
     srand(static_cast<unsigned>(time(0)));
     // 明文
     string message = "26224012ZFY";
+    string message = "26224011LYT";
 
     // 调整明文长度
     while (message.length() % 2 != 0) {
