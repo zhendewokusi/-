@@ -89,9 +89,7 @@ vector<int> multiplyMatrix(const vector<vector<int>>& matrix, const vector<int>&
             result[i] += matrix[i][j] * vec[j];
         }
         result[i] %= MOD;
-    }
-    return result;
-}
+    }KL
 
 // 加密
 string encrypt(const string& plaintext, const vector<vector<int>>& key) {
