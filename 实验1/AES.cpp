@@ -1,5 +1,15 @@
 #include "AES.h"
 
+/*
+AES加密过程是在一个4×4的字节矩阵上运作，这个矩阵又称为“体（state）”，其初值就是一个明文区块（矩阵中一个元素大小就是明文区块中的一个Byte）。（Rijndael加密法因支持更大的区块，其矩阵的“列数（Row number）”可视情况增加）加密时，各轮AES加密循环（除最后一轮外）均包含4个步骤：
+
+AddRoundKey—矩阵中的每一个字节都与该次回合密钥（round key）做XOR运算；每个子密钥由密钥生成方案产生。
+SubBytes—透过一个非线性的替换函数，用查找表的方式把每个字节替换成对应的字节。
+ShiftRows—将矩阵中的每个横列进行循环式移位。
+MixColumns—为了充分混合矩阵中各个直行的操作。这个步骤使用线性转换来混合每内联的四个字节。最后一个加密循环中省略MixColumns步骤，而以另一个AddRoundKey取代。
+
+*/
+
 AES::AES(const AESKeyLength keyLength) {
   switch (keyLength) {
     case AESKeyLength::AES_128:
