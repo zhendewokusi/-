@@ -1,4 +1,4 @@
-#include <ostream>
+#include <iostream>
 #include "实验1/AES.h"
 #include "实验1/Hill.h"
 #include "实验2/RSA.h"
