@@ -178,21 +178,28 @@ int test3() {
     AES aes(AESKeyLength::AES_128);
 
     // 转换格式
-    std::vector<unsigned char> plaintext = cpp_int_to_vector(c1);
-    std::vector<unsigned char> ciphertext = aes.EncryptCBC(plaintext, key, iv);
-
-    std::cout << "Ciphertext (CBC): ";
-    printHex(ciphertext);
+    std::vector<unsigned char> plaintext_c1 = cpp_int_to_vector(c1);
+    std::vector<unsigned char> ciphertext_c1 = aes.EncryptCBC(plaintext_c1, key, iv);
+    std::vector<unsigned char> plaintext_c2 = cpp_int_to_vector(c2);
+    std::vector<unsigned char> ciphertext_c2 = aes.EncryptCBC(plaintext_c2, key, iv);
+    std::cout << "Ciphertext(C1) (CBC): ";
+    printHex(ciphertext_c1);
+    std::cout << "Ciphertext(C2) (CBC): ";
+    printHex(ciphertext_c2);
 
     // 解密
     // AES解密
-    std::vector<unsigned char> decryptedtext = aes.DecryptCBC(ciphertext, key, iv);
+    std::vector<unsigned char> decryptedtext_c1 = aes.DecryptCBC(ciphertext_c1, key, iv);
+    std::vector<unsigned char> decryptedtext_c2 = aes.DecryptCBC(ciphertext_c2, key, iv);
 
-    std::cout << "Decrypted text (CBC): ";
-    printHex(decryptedtext);
+    std::cout << "Decrypted(C1) text (CBC): ";
+    printHex(decryptedtext_c1);
+    std::cout << "Decrypted(C2) text (CBC): ";
+    printHex(decryptedtext_c2);
 
     // 转换格式
-    c1 = vector_to_cpp_int(decryptedtext);
+    c1 = vector_to_cpp_int(decryptedtext_c1);
+    c2 = vector_to_cpp_int(decryptedtext_c2);
 
     // ElGamal 解密
     cpp_int s = powm(c1, x, p);
