@@ -550,6 +550,5 @@ int main() {
         std::cout << "CBC mode test failed!" << std::endl;
     }
 
-
     return 0;
 }
