@@ -505,7 +505,7 @@ std::vector<unsigned char> AES::DecryptOFB(std::vector<unsigned char> in, std::v
 }
 
 
-int main() {
+int test_aes() {
     AES aes(AESKeyLength::AES_128);
 
     std::vector<unsigned char> key = {

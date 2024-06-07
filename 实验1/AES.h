@@ -359,4 +359,5 @@ static const unsigned char CMDS[4][4] = {
 static const unsigned char INV_CMDS[4][4] = {
     {14, 11, 13, 9}, {9, 14, 11, 13}, {13, 9, 14, 11}, {11, 13, 9, 14}};
 
+void printHex(const std::vector<unsigned char>& data);
 #endif
