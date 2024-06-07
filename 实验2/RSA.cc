@@ -1,8 +1,4 @@
-#include <iostream>
-#include <string>
-#include <boost/multiprecision/cpp_int.hpp>
-#include <boost/random.hpp>
-#include <boost/multiprecision/miller_rabin.hpp>
+#include "RSA.h"
 
 using namespace boost::multiprecision;
 using namespace boost::random;
@@ -63,7 +59,7 @@ std::string cpp_int_to_string(cpp_int num) {
     return result;
 }
 
-int main() {
+int test2_1() {
 
     mt19937 rng(std::random_device{}());
 

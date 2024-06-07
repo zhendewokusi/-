@@ -504,8 +504,39 @@ std::vector<unsigned char> AES::DecryptOFB(std::vector<unsigned char> in, std::v
     return v;
 }
 
+// 填充函数
+static std::vector<unsigned char> add_padding(const std::vector<unsigned char>& input, size_t block_size) {
+    std::vector<unsigned char> padded = input;
+    size_t padding_len = block_size - (input.size() % block_size);
+    padded.insert(padded.end(), padding_len, static_cast<unsigned char>(padding_len));
+    return padded;
+}
 
-int test_aes() {
+// 去除填充函数
+static std::vector<unsigned char> remove_padding(const std::vector<unsigned char>& input) {
+    if (input.empty()) {
+        throw std::runtime_error("Invalid padding");
+    }
+    unsigned char padding_len = input.back();
+    if (padding_len > input.size()) {
+        throw std::runtime_error("Invalid padding");
+    }
+    return std::vector<unsigned char>(input.begin(), input.end() - padding_len);
+}
+
+// 将 std::string 转换为 std::vector<unsigned char>，并进行填充
+static std::vector<unsigned char> string_to_vector(const std::string& str, size_t block_size) {
+    std::vector<unsigned char> vec(str.begin(), str.end());
+    return add_padding(vec, block_size);
+}
+
+// 将 std::vector<unsigned char> 转换为 std::string，并去除填充
+static std::string vector_to_string(const std::vector<unsigned char>& vec) {
+    std::vector<unsigned char> unpadded_vec = remove_padding(vec);
+    return std::string(unpadded_vec.begin(), unpadded_vec.end());
+}
+
+int test1_3() {
     AES aes(AESKeyLength::AES_128);
 
     std::vector<unsigned char> key = {
@@ -517,14 +548,18 @@ int test_aes() {
         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
         0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f
     };
+//     string message = "26224011LYT";
+    std::string message = "26224012ZFY";
 
-    std::vector<unsigned char> plaintext = {
-        0x6b, 0xc1, 0xbe, 0xe2, 0x2e, 0x40, 0x9f, 0x96,
-        0xe9, 0x3d, 0x7e, 0x11, 0x73, 0x93, 0x17, 0x2a
-    };
-// ********************** OFB **************************
+    std::cout << "Input:" << message << std::endl;
+
+    std::vector<unsigned char> plaintext = string_to_vector(message, 16);
+    
     std::cout << "Plaintext: ";
     printHex(plaintext);
+
+// ********************** OFB **************************
+    std::cout << "OFB Mode :" << std::endl;
 
     std::vector<unsigned char> ciphertext = aes.EncryptOFB(plaintext, key, iv);
 
@@ -533,16 +568,20 @@ int test_aes() {
 
     std::vector<unsigned char> decryptedtext = aes.DecryptOFB(ciphertext, key, iv);
 
+    std::string decryptedstr = vector_to_string(decryptedtext);
+    std::cout << "Output:" << decryptedstr << std::endl;
+
     std::cout << "Decrypted text (OFB): ";
     printHex(decryptedtext);
 
-    if (plaintext == decryptedtext) {
+    if (message == decryptedstr) {
         std::cout << "OFB mode test passed!" << std::endl;
     } else {
         std::cout << "OFB mode test failed!" << std::endl;
     }
 
 // ********************** CBC **************************
+    std::cout << "CBC Mode :" << std::endl;
 
     ciphertext = aes.EncryptCBC(plaintext, key, iv);
 
@@ -551,10 +590,13 @@ int test_aes() {
 
     decryptedtext = aes.DecryptCBC(ciphertext, key, iv);
 
+    decryptedstr = vector_to_string(decryptedtext);
+    std::cout << "Output:" << decryptedstr << std::endl;
+
     std::cout << "Decrypted text (CBC): ";
     printHex(decryptedtext);
 
-    if (plaintext == decryptedtext) {
+    if (message == decryptedstr) {
         std::cout << "CBC mode test passed!" << std::endl;
     } else {
         std::cout << "CBC mode test failed!" << std::endl;

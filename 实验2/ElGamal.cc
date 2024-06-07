@@ -9,7 +9,7 @@ using namespace boost::multiprecision;
 using namespace boost::random;
 
 // 生成随机素数
-cpp_int generate_prime(int bits, mt19937 &rng) {
+static cpp_int generate_prime(int bits, mt19937 &rng) {
     while (true) {
         cpp_int p = 0;
         for (int i = 0; i < bits; ++i) {
@@ -25,7 +25,7 @@ cpp_int generate_prime(int bits, mt19937 &rng) {
 }
 
 // 将字符串转换为大整数
-cpp_int string_to_cpp_int(const std::string &str) {
+static cpp_int string_to_cpp_int(const std::string &str) {
     cpp_int result = 0;
     for (char c : str) {
         result = result * 100 + static_cast<int>(c);
@@ -34,7 +34,7 @@ cpp_int string_to_cpp_int(const std::string &str) {
 }
 
 // 将大整数转换回字符串
-std::string cpp_int_to_string(cpp_int num) {
+static std::string cpp_int_to_string(cpp_int num) {
     std::string result;
     while (num > 0) {
         char c = static_cast<char>(num % 100);
@@ -45,13 +45,13 @@ std::string cpp_int_to_string(cpp_int num) {
 }
 
 // 填充函数
-void add_padding(std::vector<unsigned char>& vec, size_t block_size) {
+static void add_padding(std::vector<unsigned char>& vec, size_t block_size) {
     size_t padding_len = block_size - (vec.size() % block_size);
     vec.insert(vec.end(), padding_len, static_cast<unsigned char>(padding_len));
 }
 
 // 去除填充函数
-void remove_padding(std::vector<unsigned char>& vec) {
+static void remove_padding(std::vector<unsigned char>& vec) {
     if (vec.empty()) {
         throw std::runtime_error("Invalid padding");
     }
@@ -84,7 +84,7 @@ cpp_int vector_to_cpp_int(std::vector<unsigned char>& vec) {
     return num;
 }
 
-int test2() {
+int test2_2() {
     using namespace boost::multiprecision;
 
     mt19937 rng(std::random_device{}());
@@ -107,8 +107,8 @@ int test2() {
     std::cout << "Private Key: x = " << x << std::endl;
 
     // 待加密消息
-//     std::string message = "26224012ZFY"; // 学号和姓名
-    std::string message = "26224011LYT"; // 学号和姓名
+    std::string message = "26224012ZFY"; // 学号和姓名
+//     std::string message = "26224011LYT"; // 学号和姓名
     cpp_int message_num = string_to_cpp_int(message);
 
     // 加密
@@ -140,7 +140,7 @@ std::vector<unsigned char> iv = {
     0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f
 };
 
-int test3() {
+int test2_3() {
     mt19937 rng(std::random_device{}());
 
     // 生成大素数 p
@@ -162,6 +162,7 @@ int test3() {
 
     // 待加密消息
     std::string message = "26224012ZFY"; // 学号和姓名
+//     std::string message = "26224011LYT"; // 学号和姓名
     cpp_int message_num = string_to_cpp_int(message);
 
     // 加密
@@ -209,9 +210,4 @@ int test3() {
     std::cout << "Decrypted Message: " << decrypted_message << std::endl;
 
     return 0;
-}
-
-int main() {
-//     test2();
-    test3();
 }

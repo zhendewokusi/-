@@ -1,9 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <ctime>
-#include <cstdlib>
-#include <stdexcept>
+#include "Hill.h"
 
 using namespace std;
 
@@ -167,7 +162,7 @@ void printMatrix(const vector<vector<int>>& matrix) {
     }
 }
 
-int main() {
+int test1_1() {
     srand(static_cast<unsigned>(time(0)));
     // 明文
     string message = "26224012ZFY";
