@@ -82,8 +82,8 @@ int test2_1() {
     std::cout << "Private Key: (n = " << n << ", d = " << d << ")" << std::endl;
 
     // 待加密消息
-//     std::string message = "26224011LYT"; // 学号和姓名
-    std::string message = "26224012ZFY"; // 学号和姓名
+    std::string message = "26224011LYT"; // 学号和姓名
+//     std::string message = "26224012ZFY"; // 学号和姓名
     cpp_int message_num = string_to_cpp_int(message);
 
     // 加密

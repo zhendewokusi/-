@@ -107,8 +107,8 @@ int test2_2() {
     std::cout << "Private Key: x = " << x << std::endl;
 
     // 待加密消息
-    std::string message = "26224012ZFY"; // 学号和姓名
-//     std::string message = "26224011LYT"; // 学号和姓名
+//     std::string message = "26224012ZFY"; // 学号和姓名
+    std::string message = "26224011LYT"; // 学号和姓名
     cpp_int message_num = string_to_cpp_int(message);
 
     // 加密
@@ -161,8 +161,8 @@ int test2_3() {
     std::cout << "Private Key: x = " << x << std::endl;
 
     // 待加密消息
-    std::string message = "26224012ZFY"; // 学号和姓名
-//     std::string message = "26224011LYT"; // 学号和姓名
+//     std::string message = "26224012ZFY"; // 学号和姓名
+    std::string message = "26224011LYT"; // 学号和姓名
     cpp_int message_num = string_to_cpp_int(message);
 
     // 加密
