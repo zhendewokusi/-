@@ -211,7 +211,7 @@ int test1_1() {
 
     // 解密结果
     cout << "Decrypted using 2x2 Key: " << decrypted2x2 << endl;
-    cout << "Decrypted using 3x3 Key: " << message << endl;
+    cout << "Decrypted using 3x3 Key: " << decrypted3x3 << endl;
 
     return 0;
 }
