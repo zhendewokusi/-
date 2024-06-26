@@ -33,6 +33,7 @@ void test3_1() {
     
     // 为消息生成 MAC
     std::string mac = generate_hmac(key, message);
+    std::cout << "Message: " << message << std::endl;
     std::cout << "Generated MAC: " << mac << std::endl;
     
     // 验证MAC
