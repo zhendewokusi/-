@@ -3,6 +3,7 @@
 #include "实验1/Hill.h"
 #include "实验2/RSA.h"
 #include "实验2/ElGamal.h"
+#include "实验3/hmac.h"
 
 int main() {
 	std::cout << "---TEST 1-1---" << std::endl;
@@ -15,5 +16,7 @@ int main() {
 	test2_2();
 	std::cout << "---TEST 2-3---" << std::endl;
 	test2_3();
+	std::cout << "---TEST 3-1---" << std::endl;
+	test3_1();
 	return 0;
 }
