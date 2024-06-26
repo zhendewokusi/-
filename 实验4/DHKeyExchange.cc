@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
-#include "../实验1/AES.h"
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/random.hpp>
 #include <boost/multiprecision/miller_rabin.hpp>
+#include "../实验1/AES.h"
+#include "DHKeyExchange.h"
 
 using namespace boost::multiprecision;
 using namespace boost::random;
@@ -59,7 +60,7 @@ bool miller_rabin_test(const cpp_int &n, int k, mt19937 &rng) {
 }
 
 // 生成随机素数
-cpp_int generate_prime(int bits, mt19937 &rng) {
+static cpp_int generate_prime(int bits, mt19937 &rng) {
     while (true) {
         cpp_int p = 0;
         for (int i = 0; i < bits; ++i) {
