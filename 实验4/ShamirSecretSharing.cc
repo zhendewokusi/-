@@ -66,7 +66,8 @@ void shamir_secret_sharing() {
     // 示例: n = 5, t = 3
     int n = 5;
     int t = 3;
-    std::string secret_str = "26224011"; // 只包含数字部分的学号部分
+//     std::string secret_str = "26224011"; // 只包含数字部分的学号部分
+    std::string secret_str = "26224012"; // 只包含数字部分的学号部分
     cpp_int secret;
     try {
         secret = cpp_int(secret_str.c_str());  // 直接使用cpp_int初始化秘密

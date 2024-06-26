@@ -28,8 +28,8 @@ bool verify_hmac(const std::string& key, const std::string& message, const std::
 
 void test3_1() {
     std::string key = "secret_key"; // HMAC 密钥
-//     std::string message = "26224012ZFY"; // 学号+姓名
-    std::string message = "26224011LYT"; // 学号+姓名
+    std::string message = "26224012ZFY"; // 学号+姓名
+//     std::string message = "26224011LYT"; // 学号+姓名
     
     // 为消息生成 MAC
     std::string mac = generate_hmac(key, message);

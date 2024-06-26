@@ -165,8 +165,8 @@ void printMatrix(const vector<vector<int>>& matrix) {
 int test1_1() {
     srand(static_cast<unsigned>(time(0)));
     // 明文
-//     string message = "26224012ZFY";
-    string message = "26224011LYT";
+    string message = "26224012ZFY";
+//     string message = "26224011LYT";
 
     // 调整明文长度
     while (message.length() % 2 != 0) {

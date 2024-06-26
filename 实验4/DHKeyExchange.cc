@@ -112,7 +112,8 @@ void dh_key_exchange() {
     }
 
     // 使用共享密钥进行AES加密解密
-    std::string message = "26224011LYT";
+//     std::string message = "26224011LYT";
+    std::string message = "26224012ZFY";
     AES aes(AESKeyLength::AES_128);
 
     export_bits(shared_secret_A, key.begin(), 8);
