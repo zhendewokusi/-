@@ -40,8 +40,8 @@ def xor_encrypt_decrypt(data, key):
     return ''.join(str(int(a) ^ int(b)) for a, b in zip(data, key))
 
 #设置姓名和学号
-name = "Li Yantong"
-student_id = "26224011"
+name = "Zhao Fangyuan"
+student_id = "26224012"
 
 # 转换为二进制字符串
 name_bin = str_to_ascii_bin(name)

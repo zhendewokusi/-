@@ -31,8 +31,8 @@ print("随机生成的置换表：", substitution_table)
 inverse_table = inverse_substitution_table(substitution_table)
 print("逆置换表：", inverse_table)
 
-student_id = "26224011"
-name = "Li Yantong"
+student_id = "26224012"
+name = "Zhao Fangyuan"
 message = student_id + name
 
 encrypted_message = encrypt_message(message, substitution_table)
