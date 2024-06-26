@@ -525,13 +525,13 @@ static std::vector<unsigned char> remove_padding(const std::vector<unsigned char
 }
 
 // 将 std::string 转换为 std::vector<unsigned char>，并进行填充
-static std::vector<unsigned char> string_to_vector(const std::string& str, size_t block_size) {
+std::vector<unsigned char> string_to_vector(const std::string& str, size_t block_size) {
     std::vector<unsigned char> vec(str.begin(), str.end());
     return add_padding(vec, block_size);
 }
 
 // 将 std::vector<unsigned char> 转换为 std::string，并去除填充
-static std::string vector_to_string(const std::vector<unsigned char>& vec) {
+std::string vector_to_string(const std::vector<unsigned char>& vec) {
     std::vector<unsigned char> unpadded_vec = remove_padding(vec);
     return std::string(unpadded_vec.begin(), unpadded_vec.end());
 }

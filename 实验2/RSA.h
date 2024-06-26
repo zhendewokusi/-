@@ -8,5 +8,5 @@
 
 
 int test2_1();
-
+void test3_2();
 #endif

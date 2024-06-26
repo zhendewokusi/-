@@ -20,4 +20,5 @@ std::string cpp_int_to_string(cpp_int num);
 
 int test2_2();
 int test2_3();
+void test3_3();
 #endif

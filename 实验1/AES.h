@@ -358,6 +358,8 @@ static const unsigned char CMDS[4][4] = {
 /// Inverse circulant MDS matrix
 static const unsigned char INV_CMDS[4][4] = {
     {14, 11, 13, 9}, {9, 14, 11, 13}, {13, 9, 14, 11}, {11, 13, 9, 14}};
+std::string vector_to_string(const std::vector<unsigned char>& vec);
+std::vector<unsigned char> string_to_vector(const std::string& str, size_t block_size);
 
 void printHex(const std::vector<unsigned char>& data);
 int test1_3();

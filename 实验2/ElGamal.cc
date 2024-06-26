@@ -1,9 +1,12 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/random.hpp>
 #include <boost/multiprecision/miller_rabin.hpp>
 #include "../实验1/AES.h"
+#include <openssl/sha.h>
+#include <openssl/evp.h>
 
 using namespace boost::multiprecision;
 using namespace boost::random;
@@ -140,6 +143,44 @@ std::vector<unsigned char> iv = {
     0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f
 };
 
+
+// 计算模逆
+static cpp_int mod_inverse(cpp_int a, cpp_int m) {
+    cpp_int m0 = m, t, q;
+    cpp_int x0 = 0, x1 = 1;
+    if (m == 1)
+        return 0;
+    while (a > 1) {
+        q = a / m;
+        t = m;
+        m = a % m;
+        a = t;
+        t = x0;
+        x0 = x1 - q * x0;
+        x1 = t;
+    }
+    if (x1 < 0)
+        x1 += m0;
+    return x1;
+}
+
+// 计算 SHA-256 哈希
+cpp_int sha256_hash(const std::string& message) {
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    EVP_MD_CTX* mdctx = EVP_MD_CTX_new();
+    const EVP_MD* md = EVP_sha256();
+    EVP_DigestInit_ex(mdctx, md, NULL);
+    EVP_DigestUpdate(mdctx, message.c_str(), message.size());
+    EVP_DigestFinal_ex(mdctx, hash, NULL);
+    EVP_MD_CTX_free(mdctx);
+
+    cpp_int hash_num = 0;
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; ++i) {
+        hash_num = (hash_num << 8) | hash[i];
+    }
+    return hash_num;
+}
+
 int test2_3() {
     mt19937 rng(std::random_device{}());
 
@@ -210,4 +251,57 @@ int test2_3() {
     std::cout << "Decrypted Message: " << decrypted_message << std::endl;
 
     return 0;
+}
+
+void test3_3() {
+    using namespace boost::multiprecision;
+
+    mt19937 rng(std::random_device{}());
+
+    // 生成大素数 p
+    cpp_int p = generate_prime(200, rng);
+    cpp_int g = 2;  // 选择生成元 g
+
+    // 选择私钥 x
+    cpp_int x = 0;
+    while (x == 0 || x >= p-1) {
+        x = cpp_int(rng()) % p;
+    }
+
+    // 计算公钥 h
+    cpp_int h = powm(g, x, p);
+
+    // 打印密钥对
+    std::cout << "Public Key: (p = " << p << ", g = " << g << ", h = " << h << ")" << std::endl;
+    std::cout << "Private Key: x = " << x << std::endl;
+
+    // 待签名消息
+    std::string message = "26224011LYT"; // 学号和姓名
+    cpp_int hash = sha256_hash(message);
+
+    // 生成随机数 k
+    cpp_int k = 0;
+    while (k == 0 || k >= p-1) {
+        k = cpp_int(rng()) % p;
+    }
+
+    // 计算 r 和 s
+    cpp_int r = powm(g, k, p);
+    cpp_int k_inv = mod_inverse(k, p-1);
+    cpp_int s = (k_inv * (hash - x * r)) % (p-1);
+    if (s < 0) s += p-1;
+
+    // 输出签名
+    std::cout << "Signature: (r = " << r << ", s = " << s << ")" << std::endl;
+
+    // 验证签名
+    cpp_int v1 = powm(g, hash, p);
+    cpp_int v2 = (powm(h, r, p) * powm(r, s, p)) % p;
+
+    if (v1 == v2) {
+        std::cout << "Signature verification succeeded. Message is authentic." << std::endl;
+    } else {
+        std::cout << "Signature verification failed. Message is not authentic." << std::endl;
+    }
+
 }

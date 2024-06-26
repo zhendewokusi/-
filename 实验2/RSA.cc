@@ -97,3 +97,46 @@ int test2_1() {
 
     return 0;
 }
+
+void test3_2() {
+    mt19937 rng(std::random_device{}());
+
+    // 生成大素数 p 和 q
+    cpp_int p = generate_prime(200, rng);
+    cpp_int q = generate_prime(200, rng);
+    
+    // 计算 n 和 φ(n)
+    cpp_int n = p * q;
+    cpp_int phi_n = (p - 1) * (q - 1);
+
+    // 选择公钥指数 e
+    cpp_int e = 65537;  // 通常选择这个值
+
+    // 计算私钥指数 d
+    cpp_int d = mod_inverse(e, phi_n);
+
+    // 打印密钥对
+    std::cout << "Public Key: (n = " << n << ", e = " << e << ")" << std::endl;
+    std::cout << "Private Key: (n = " << n << ", d = " << d << ")" << std::endl;
+
+    // 待签名消息
+//     std::string message = "26224012ZFY"; // 学号和姓名
+    std::string message = "26224011LYT"; // 学号和姓名
+    cpp_int message_num = string_to_cpp_int(message);
+
+    // 签名
+    cpp_int signature = powm(message_num, d, n);
+    std::cout << "Signature: " << signature << std::endl;
+
+    // 验证签名
+    cpp_int verified_message_num = powm(signature, e, n);
+    std::string verified_message = cpp_int_to_string(verified_message_num);
+    std::cout << "Verified Message: " << verified_message << std::endl;
+
+    // 检查消息是否匹配
+    if (message == verified_message) {
+        std::cout << "Signature verification succeeded. Message is authentic." << std::endl;
+    } else {
+        std::cout << "Signature verification failed. Message is not authentic." << std::endl;
+    }
+}
